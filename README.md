@@ -1,6 +1,6 @@
 # Munters thesis model v2 — exposure-based EBITDA
 
-**Academic research prototype, NOT a Munters risk assessment. All default data and borrowing terms are HYPOTHETICAL.**
+**Academic research prototype**
 
 Developed as a transparent *adaptation inspired by* Andrén, Jankensgård & Oxelheim (2005), *Exposure-based Cash-Flow-at-Risk under Macroeconomic Uncertainty*, IFN Working Paper 635. This is **not** their implementation and does **not** reproduce Norsk Hydro estimates.
 
@@ -29,14 +29,13 @@ date,reference_rate,annualized_ebitda_sek,macro_factor
 2020-Q2,0.009,1400000000,-1.4
 ```
 
-**These two sample lines are only for column-format illustration and are not Munters observations.** Do not treat them as historical data. Provide at least 20 observations (40+ preferable).
+**These two sample lines are only for column-format illustration.** Provide at least 20 observations (40+ preferable).
 
 - `reference_rate`: annual decimal, e.g. `0.025` for 2.5%.
 - `annualized_ebitda_sek`: positive quarterly EBITDA **multiplied by four**, or another consistently defined annualized EBITDA level; not trailing-year EBITDA unless you specifically adapt the model. Quarterly EBITDA must use the same accounting definition throughout.
 - `macro_factor`: macroeconomic risk factor constructed externally from relevant observed data, such as GDP growth *standardized on a training sample*. Using `macro_factor` is optional in the broader research design, but required by this particular example program. The chosen macro variable and scaling must be reported and defended.
 - Only use chronological quarterly data; the program checks dates and basic values, not data provenance or accounting comparability.
 
-## What changed vs v1
 
 1. Rates are projected with a fitted **AR(1)** process. For equally spaced dates this is equivalent to a discretely sampled Vasicek/OU process when estimated persistence is in (0,1); it is a *physical-measure* statistical fit, not a derivative-pricing calibration.
 2. The macro factor has its own fitted AR(1), and its shocks may correlate with rate shocks.
